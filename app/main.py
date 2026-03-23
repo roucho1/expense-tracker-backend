@@ -28,3 +28,8 @@ app.include_router(categories.router, prefix="/categories", tags=["categories"])
 @app.get("/")
 def read_root():
     return {"message": "Expense Tracker API"}
+
+
+@app.head("/")
+def head_root():
+    return {"message": "Expense Tracker API"}
