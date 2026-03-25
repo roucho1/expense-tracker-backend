@@ -66,7 +66,7 @@ def update_transaction(
     if not db_transaction:
         raise HTTPException(status_code=404, detail="找不到此記錄")
 
-    if transaction.type is not None:
+    if transaction.type in transaction.model_fields_set:
         db_transaction.type = transaction.type
     if transaction.category_id is not None:
         db_transaction.category_id = transaction.category_id
