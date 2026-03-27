@@ -45,6 +45,11 @@ def login(user: schemas.UserCreate, db: Session = Depends(get_db)):
     return {"access_token": access_token, "token_type": "bearer"}
 
 
+@router.get("/me", response_model=schemas.UserResponse)
+def get_me(current_user: models.User = Depends(auth.get_current_user)):
+    return current_user
+
+
 @router.put("/change-password")
 def change_password(
     data: schemas.ChangePasswordRequest,
