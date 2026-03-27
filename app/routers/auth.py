@@ -43,3 +43,16 @@ def login(user: schemas.UserCreate, db: Session = Depends(get_db)):
     # 產生 token
     access_token = auth.create_access_token(data={"user_id": db_user.id})
     return {"access_token": access_token, "token_type": "bearer"}
+
+
+@router.put("/change-password")
+def change_password(
+    data: schemas.ChangePasswordRequest,
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(auth.get_current_user),
+):
+    if not auth.verify_password(data.old_password, str(current_user.password_hash)):
+        raise HTTPException(status_code=400, detail="舊密碼錯誤")
+    current_user.password_hash = auth.hash_password(data.new_password)
+    db.commit()
+    return {"message": "密碼修改成功"}
