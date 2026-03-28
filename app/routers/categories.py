@@ -36,7 +36,9 @@ def create_category(
     if existing:
         raise HTTPException(status_code=400, detail="分類名稱已存在")
 
-    new_category = models.Category(user_id=current_user.id, name=category.name)
+    new_category = models.Category(
+        user_id=current_user.id, name=category.name, type=category.type
+    )
     db.add(new_category)
     db.commit()
     db.refresh(new_category)
@@ -62,6 +64,7 @@ def update_category(
         raise HTTPException(status_code=404, detail="找不到此分類")
 
     db_category.name = category.name
+    db_category.type = category.type
     db.commit()
     db.refresh(db_category)
     return db_category
