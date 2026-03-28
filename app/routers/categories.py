@@ -15,6 +15,7 @@ def get_categories(
     return (
         db.query(models.Category)
         .filter(models.Category.user_id == current_user.id)
+        .order_by(models.Category.id)
         .all()
     )
 
