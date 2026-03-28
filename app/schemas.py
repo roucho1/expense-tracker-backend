@@ -33,11 +33,13 @@ class Token(BaseModel):
 # ── Category ──────────────────────────────────────────
 class CategoryCreate(BaseModel):
     name: str
+    type: TransactionType
 
 
 class CategoryResponse(BaseModel):
     id: int
     name: str
+    type: TransactionType
     created_at: datetime
 
     class Config:

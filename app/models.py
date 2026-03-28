@@ -29,6 +29,7 @@ class Category(Base):
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     name = Column(String, nullable=False)
+    type = Column(Enum(TransactionType), nullable=False)
     created_at = Column(DateTime, default=datetime.now(timezone.utc))
 
     owner = relationship("User", back_populates="categories")
