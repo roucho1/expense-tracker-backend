@@ -4,17 +4,16 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.database import engine
 from app import models
 from app.routers import auth, transactions, categories
+import os
 
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000").split(",")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",
-        "https://expense-tracker-frontend.vercel.app",  # 之後部署再換成正確網址
-    ],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
